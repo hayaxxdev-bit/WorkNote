@@ -1,0 +1,26 @@
+
+## Cara Deploy ke Vercel
+
+### Metode 1: Via GitHub + Vercel
+
+1. **Buat repository GitHub baru**
+2. **Upload semua file** ke repository
+3. **Buka Vercel.com** → Login dengan GitHub
+4. **Klik "New Project"**
+5. **Import repository** yang sudah dibuat
+6. **Klik "Deploy"** (tidak perlu konfigurasi tambahan karena sudah ada `vercel.json`)
+
+### Metode 2: Via Vercel CLI
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Login
+vercel login
+
+# Deploy
+vercel
+
+# Deploy production
+vercel --prod
