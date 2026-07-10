@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyNotepad - Catatan Digital</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-book"></i> MyNotepad</h2>
+            <button class="new-note-btn" onclick="createNewNote()">
+                <i class="fas fa-plus"></i> Catatan Baru
+            </button>
+        </div>
+        
+        <!-- Kategori Filter -->
+        <div class="category-filter">
+            <select id="categoryFilter" onchange="filterByCategory()">
+                <option value="all">Semua Kategori</option>
+                <option value="project">📁 Project</option>
+                <option value="daily">📅 Daily</option>
+                <option value="work">💼 Pekerjaan</option>
+                <option value="personal">👤 Personal</option>
+                <option value="ideas">💡 Ide</option>
+                <option value="other">📌 Lainnya</option>
+            </select>
+        </div>
+        
+        <!-- Pencarian -->
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Cari catatan..." oninput="searchNotes()">
+        </div>
+        
+        <!-- Daftar Catatan -->
+        <div class="notes-list" id="notesList"></div>
+        
+        <!-- Stats -->
+        <div class="sidebar-footer">
+            <div class="stats">
+                <span id="totalNotes">0 catatan</span>
+                <span id="totalWords">0 kata</span>
+            </div>
+            <button class="clear-all-btn" onclick="clearAllNotes()" title="Hapus semua catatan">
+                <i class="fas fa-trash-alt"></i> Hapus Semua
+            </button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="editor-header">
+            <div class="header-left">
+                <button class="toggle-sidebar" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="note-info">
+                    <input type="text" id="noteTitle" placeholder="Judul catatan..." oninput="updateCurrentNote()">
+                    <div class="note-meta">
+                        <select id="noteCategory" onchange="updateCurrentNote()">
+                            <option value="project">📁 Project</option>
+                            <option value="daily">📅 Daily</option>
+                            <option value="work">💼 Pekerjaan</option>
+                            <option value="personal">👤 Personal</option>
+                            <option value="ideas">💡 Ide</option>
+                            <option value="other">📌 Lainnya</option>
+                        </select>
+                        <span class="word-count" id="wordCount">0 kata</span>
+                        <span class="char-count" id="charCount">0 karakter</span>
+                        <span class="last-saved" id="lastSaved"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="action-btn" onclick="exportNote()" title="Export catatan">
+                    <i class="fas fa-download"></i> Export
+                </button>
+                <button class="action-btn" onclick="toggleDarkMode()" title="Dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="action-btn save-btn" onclick="saveNote()" title="Simpan">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+            </div>
+        </div>
+        
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="format-buttons">
+                <button onclick="formatText('bold')" title="Bold"><i class="fas fa-bold"></i></button>
+                <button onclick="formatText('italic')" title="Italic"><i class="fas fa-italic"></i></button>
+                <button onclick="formatText('underline')" title="Underline"><i class="fas fa-underline"></i></button>
+                <button onclick="formatText('strikethrough')" title="Strikethrough"><i class="fas fa-strikethrough"></i></button>
+                <span class="toolbar-divider"></span>
+                <button onclick="insertList('ul')" title="Bullet List"><i class="fas fa-list-ul"></i></button>
+                <button onclick="insertList('ol')" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                <button onclick="insertCheckbox()" title="Checkbox"><i class="fas fa-check-square"></i></button>
+                <span class="toolbar-divider"></span>
+                <button onclick="insertDivider()" title="Divider"><i class="fas fa-minus"></i></button>
+                <button onclick="insertDate()" title="Insert Date"><i class="fas fa-calendar"></i></button>
+                <button onclick="insertTime()" title="Insert Time"><i class="fas fa-clock"></i></button>
+            </div>
+        </div>
+        
+        <!-- Editor -->
+        <div class="editor-container">
+            <textarea 
+                id="editor" 
+                placeholder="Mulai menulis di sini...
+                
+Tips: Gunakan toolbar di atas untuk formatting
+- **Bold** untuk judul
+- Buat checklist untuk task
+- Insert tanggal otomatis
+- Semua tersimpan otomatis di browser"
+                oninput="handleEditorInput()"
+            ></textarea>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Konfirmasi</h3>
+            <p id="modalMessage"></p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeModal()">Batal</button>
+                <button class="btn-confirm" id="btnConfirm" onclick="confirmAction()">Hapus</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
